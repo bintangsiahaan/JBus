@@ -4,7 +4,7 @@ package bintangSiahaanJBusAF;
 /**
  * Write a description of class Bus here.
  *
- * @author (your name)
+ * @author Bintang Siahaan
  * @version (a version number or a date)
  */
 public class Bus

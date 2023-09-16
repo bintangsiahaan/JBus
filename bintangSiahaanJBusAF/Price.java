@@ -7,8 +7,9 @@ package bintangSiahaanJBusAF;
  * @version (a version number or a date)
  */
 public class Price {
-    double rebate, price;
-    int discount;
+    public double rebate;
+    public double price;
+    public int discount;
 
     public Price(double price) {
         this.price = price;
@@ -28,20 +29,19 @@ public class Price {
         this.discount = 0;
     }
 
-    public int getDiscountedPrice() {
+    private double getDiscountedPrice() {
         if (discount > 100.0) {
-            discount = 100;
-            return discount;
-        } else if (discount == 100.0) {
+            discount = (int) 100.0;
             return 0;
+        } else if (discount == 100.0) {
+            return 0.0;
         } else {
-            return (int) (price - (discount / 100.0) * price);
+            return price - (discount / 100.0) * price;
         }
     }
 
-    public double getRebatedPrice() {
+    private double getRebatedPrice() {
         if (rebate > price) {
-            System.out.println("Invalid, input tidak bisa negatif");
             return 0;
         } else {
             return price - rebate;

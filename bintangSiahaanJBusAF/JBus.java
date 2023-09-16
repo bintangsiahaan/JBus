@@ -1,5 +1,12 @@
 package bintangSiahaanJBusAF;
 
+
+/**
+ * Write a description of class JBus here.
+ *
+ * @author Bintang Siahaan
+ * @version (a version number or a date)
+ */
 import java.util.Scanner;
 
 public class JBus {

@@ -15,7 +15,7 @@ public class Rating {
         this.total = 0;
     }
 
-    public void insert(long rating) {
+    public void insert(int rating) {
         total += rating;
         count++;
     }
