@@ -7,7 +7,7 @@ package bintangSiahaanJBusAF;
  * @author Bintang Siahaan
  * @version (a version number or a date)
  */
-public class Voucher
+public class Voucher extends Serializable
 {
     public String name;
     private boolean used;
@@ -16,7 +16,8 @@ public class Voucher
     public int code;
     public Type type;
     
-    public Voucher(String name, int code, Type type, double minimum, double cut){
+    public Voucher(int id, String name, int code, Type type, double minimum, double cut){
+        super(id);
         this.name = name;
         this.code = code;
         this.type = type;
@@ -39,10 +40,16 @@ public class Voucher
     public double apply(Price price){
         this.used = true;
         if (this.type == Type.DISCOUNT){
+            if(this.cut > 100.0){
+                this.cut = 100.0;
+                return 0;
+            }
             return price.price - (price.price * this.cut / 100);
         }
-        
-        else if (this.type == Type.REBATE){
+        else {
+            if (this.cut > price.price){
+                this.cut = price.price;
+            }
             return price.price - this.cut;
         }
     }

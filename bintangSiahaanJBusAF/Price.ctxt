@@ -3,12 +3,12 @@ comment0.target=Price
 comment0.text=\r\n\ Write\ a\ description\ of\ class\ Price\ here.\r\n\r\n\ @author\ Bintang\ Siahaan\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=price
 comment1.target=Price(double)
+comment1.text=public\ int\ discount;
 comment2.params=price\ discount
 comment2.target=Price(double,\ int)
 comment3.params=price\ rebate
 comment3.target=Price(double,\ double)
 comment4.params=
-comment4.target=double\ getDiscountedPrice()
-comment5.params=
-comment5.target=double\ getRebatedPrice()
-numComments=6
+comment4.target=double\ getRebatedPrice()
+comment4.text=private\ double\ getDiscountedPrice()\ {\r\n\ \ \ \ \ \ \ \ if\ (discount\ >\ 100.0)\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ discount\ \=\ (int)\ 100.0;\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ 0;\r\n\ \ \ \ \ \ \ \ }\ else\ if\ (discount\ \=\=\ 100.0)\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ 0.0;\r\n\ \ \ \ \ \ \ \ }\ else\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ price\ -\ (discount\ /\ 100.0)\ *\ price;\r\n\ \ \ \ \ \ \ \ }\r\n}
+numComments=5
