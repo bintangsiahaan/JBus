@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class JBus {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        /*Scanner scanner = new Scanner(System.in);
 
         System.out.print("Masukkan harga sebelum diskon: ");
         int beforeDiscount = scanner.nextInt();
@@ -88,5 +88,12 @@ public class JBus {
             Price price = new Price(750000, 5);
             Bus bus = new Bus("Netlab Bus", Facility.LUNCH, price, 25);
             return bus;
+    }*/
+    Payment testPayment = new Payment(1,1,1,"A",1,"A","A");
+    Invoice testInvoice = new Invoice(2,2,2,"B");
+    Station testStation = new Station(3,"C", City.DEPOK);
+    System.out.println(testPayment.print());
+    System.out.println(testInvoice.print());
+    System.out.println(testStation.print());
     }
 }
