@@ -28,7 +28,7 @@ public class Payment extends Invoice
     }
     
     public String print(){
-        return ("id:" + super.id + " Buyer Id:" + buyerId + " Renter Id:" + renterId + " time:" + time + " busId:" + busId + " departureDate:" + departureDate + " busSeat:" + busSeat);
+        return ("id:" + super.id + " buyerId:" + buyerId + " renterId:" + renterId + " time:" + time + " busId:" + busId + " departureDate:" + departureDate + " busSeat:" + busSeat);
     }
     
     public int getBusId(){
