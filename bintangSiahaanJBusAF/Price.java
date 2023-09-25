@@ -7,10 +7,14 @@ package bintangSiahaanJBusAF;
  * @version (a version number or a date)
  */
 public class Price {
-    public double rebate;
     public double price;
+    public double rebate;
     /*public int discount;*/
 
+    public String toString(){
+        return "\nPrice : " + this.price + "\nRebate : " + this.rebate;
+    }
+    
     public Price(double price) {
         this.price = price;
         /*this.discount = 0;*/
@@ -47,4 +51,6 @@ public class Price {
             return price - rebate;
         }
     }
+    
+    
 }
