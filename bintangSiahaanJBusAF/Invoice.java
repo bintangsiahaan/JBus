@@ -1,5 +1,5 @@
 package bintangSiahaanJBusAF;
-
+import java.util.Calendar;
 
 /**
  * Write a description of class Invoice here.
@@ -9,7 +9,7 @@ package bintangSiahaanJBusAF;
  */
 public class Invoice extends Serializable
 {
-    public String time;
+    public Calendar time;
     public int buyerId;
     public int renterId;
     public BusRating rating;
@@ -19,7 +19,7 @@ public class Invoice extends Serializable
         super(id);
         this.buyerId = buyerId;
         this.renterId = renterId;
-        this.time = time;
+        this.time = Calendar.getInstance();
         this.rating = BusRating.NONE;
         this.status = PaymentStatus.WAITING;
     }
@@ -28,7 +28,7 @@ public class Invoice extends Serializable
         super(id);
         this.buyerId = buyer.id;
         this.renterId = renter.id;
-        this.time = time;
+        this.time = Calendar.getInstance();
         this.rating = BusRating.NONE;
         this.status = PaymentStatus.WAITING;
     }

@@ -95,7 +95,7 @@ public class JBus {
     System.out.println(testPayment.print());
     System.out.println(testInvoice.print());
     System.out.println(testStation.print());
-    }*/
+    }
     Review testReview = new Review(1, "23 August 2023", "Bad Quality");
     Price testPrice = new Price(100000.0, 20000.0);
     Station testDeparture = new Station(2, "Depok Terminal", City.DEPOK, "Jl. Margonda Raya");
@@ -108,5 +108,20 @@ public class JBus {
     System.out.println(testAccount);
     System.out.println(testPrice);
     System.out.println(testRating);
+    }*/
+    Price[] unfilteredArray = new Price[5];
+    for(int i = 0; i < unfilteredArray.length; i++){
+        int j = 5000;
+        unfilteredArray[i] = new Price((i+1)*j);
+    }
+    System.out.println("Price List");
+    for(Price price : unfilteredArray){
+        System.out.println(price.price);
+    }
+    
+    System.out.println("Below 12000.0");
+    System.out.println(Validate.filter(unfilteredArray, 12000, true));
+    System.out.println("Above 10000.0");
+    System.out.println(Validate.filter(unfilteredArray, 10000, false));
     }
 }

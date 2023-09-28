@@ -7,7 +7,7 @@ package bintangSiahaanJBusAF;
  * @author Bintang Siahaan
  * @version (a version number or a date)
  */
-public class Bus extends Serializable
+public class Bus extends Serializable implements FileParser
 {
     public int capacity;
     public Facility facility;
@@ -33,5 +33,13 @@ public class Bus extends Serializable
     public String toString(){
         return "\nId : " + super.id + "\nNama : " + name + "\nFasilitas : " + facility + "" + price + "\nCapacity : " + capacity +
                "\nBus Type : " + busType + "\nCity : " + city + "" + departure + "" + arrival;
+    }
+    
+    public Object write() {
+        return null;
+    }
+
+    public boolean read(String string) {
+        return false;
     }
 }

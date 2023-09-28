@@ -7,7 +7,7 @@ package bintangSiahaanJBusAF;
  * @author Bintang Siahaan
  * @version (a version number or a date)
  */
-public class Account extends Serializable
+public class Account extends Serializable implements FileParser
 {
     public String email;
     public String name;
@@ -23,5 +23,13 @@ public class Account extends Serializable
     public String toString(){
         return "\nId : " + super.id + "\nName : " + name + "\nEmail : " + email +
                "\nPassword : " + password;
+    }
+    
+    public Object write() {
+        return null;
+    }
+
+    public boolean read(String string) {
+        return false;
     }
 }
