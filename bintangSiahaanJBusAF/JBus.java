@@ -1,21 +1,19 @@
 package bintangSiahaanJBusAF;
 import java.util.Calendar;
-
+import java.util.Scanner;
 /**
  * Write a description of class JBus here.
  *
  * @author Bintang Siahaan
  * @version (a version number or a date)
  */
-import java.util.Scanner;
-
-public class JBus {
-        public static Bus createBus() {
+  public class JBus {
+    public static Bus createBus() {
         Price price = new Price(750000, 5);
         Bus bus = new Bus(1, "Netlab Bus", Facility.LUNCH, price, 25, BusType.REGULER, City.BANDUNG, new Station(1, "Depok Terminal", City.DEPOK, "Jl. Margonda Raya"), new Station(2, "Halte UI", City.JAKARTA, "Universitas Indonesia"));
         return bus;
     }
-public static void main(String[] args) {
+    public static void main(String[] args) {
     
     Price[] unfilteredArray = new Price[5];
     for(int i = 0; i < unfilteredArray.length; i++){
@@ -35,12 +33,12 @@ public static void main(String[] args) {
 
     
     Bus testBus = createBus();
-    /*
+    
     //Payment
     Payment testPayment = new Payment(1, 1, 1, testBus.id, "S1");
-    System.out.println(testPayment.getdepartureInfo());
+    System.out.println(testPayment.getDepartureInfo());
     System.out.println(testPayment.getTime());
-    */
+    
     //test Schedule
     Calendar schedule1 = Calendar.getInstance();
     testBus.addSchedule(schedule1);

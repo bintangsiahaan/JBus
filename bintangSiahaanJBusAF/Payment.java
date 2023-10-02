@@ -13,23 +13,22 @@ public class Payment extends Invoice
     private int busId;
     public Calendar departureDate;
     public String busSeat;
-    SimpleDateFormat SDFormat = new SimpleDateFormat("dd MMMM yyyy");
     
-    public Payment(int id, int buyerId, int renterId, String time, int busId, String busSeat){
-        super(id, buyerId, renterId, time);
+    public Payment(int id, int buyerId, int renterId, int busId, String busSeat){
+        super(id, buyerId, renterId);
         this.busId = busId;
         this.departureDate = Calendar.getInstance();
         this.busSeat = busSeat;
-        this.departureDate.add(Calendar.DATE, 2);
+        this.departureDate.add(Calendar.DAY_OF_MONTH, 2);
 
     }
     
-    public Payment(int id, Account buyer, Renter renter, String time, int busId, String busSeat){
-        super(id, buyer.id, renter.id, time);
+    public Payment(int id, Account buyer, Renter renter, int busId, String busSeat){
+        super(id, buyer.id, renter.id);
         this.busId = busId;
         this.departureDate = Calendar.getInstance();
         this.busSeat = busSeat;
-        this.departureDate.add(Calendar.DATE, 2);
+        this.departureDate.add(Calendar.DAY_OF_MONTH, 2);
     }
     
     public String toString(){
@@ -41,11 +40,12 @@ public class Payment extends Invoice
     }
     
     public String getDepartureInfo(){
-        
-        return ("id:" + super.id + "\nbuyerId:" + buyerId + "\nrenterId:" + renterId + "\ntime:" + time + "\nbusId:" + busId + "\ndepartureDate:" + departureDate + "\nbusSeat:" + busSeat);
+        SimpleDateFormat SDFormat = new SimpleDateFormat("M dd, yyyy");
+        return ("id:" + super.id + "\nbuyerId:" + buyerId + "\nrenterId:" + renterId + "\nbusId:" + busId + "\ndepartureDate:" + SDFormat.format(departureDate.getTime())+ "\nbusSeat:" + busSeat);
     }
     
     public String getTime(){
+        SimpleDateFormat SDFormat = new SimpleDateFormat("M dd, yyyy hh:mm:ss");
         return SDFormat.format(this.time.getTime());
     }
 }

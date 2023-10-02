@@ -15,7 +15,7 @@ public class Invoice extends Serializable
     public BusRating rating;
     public PaymentStatus status;
     
-    protected Invoice(int id, int buyerId, int renterId, String time){
+    protected Invoice(int id, int buyerId, int renterId){
         super(id);
         this.buyerId = buyerId;
         this.renterId = renterId;
@@ -24,7 +24,7 @@ public class Invoice extends Serializable
         this.status = PaymentStatus.WAITING;
     }
     
-    public Invoice(int id, Account buyer, Renter renter, String time){
+    public Invoice(int id, Account buyer, Renter renter){
         super(id);
         this.buyerId = buyer.id;
         this.renterId = renter.id;
@@ -34,7 +34,7 @@ public class Invoice extends Serializable
     }
     
     public String toString(){
-        return ("\nId:" + super.id + "\nbuyerId:" + buyerId + "\nrenterId:" + renterId + "\ntime:" + time);
+        return ("\nId:" + super.id + "\nbuyerId:" + buyerId + "\nrenterId:" + renterId + "\ntime:" + time.getTime());
     }
     
     public enum BusRating{
