@@ -15,7 +15,15 @@ import java.sql.Timestamp;
         return bus;
     }
     public static void main(String[] args) {
-    System.out.println("Hello from Intellij!");
+      Integer[] numbers = {10, 20, 30, 40, 50};
+      int valueToCheck = 30;
+
+      boolean result = Algorithm.exists(numbers, valueToCheck);
+      if (result) {
+        System.out.println(valueToCheck + " terdapat dalam array.");
+      } else{
+          System.out.println(valueToCheck + " tidak terdapat dalam array.");
+      }
     /*Price[] unfilteredArray = new Price[5];
     for(int i = 0; i < unfilteredArray.length; i++){
     
@@ -49,7 +57,7 @@ import java.sql.Timestamp;
     
     for(Schedule s : testBus.schedules){
         testBus.printSchedule(s);
-    }*/
+    }
     Bus b = createBus();
     Timestamp schedule1 = Timestamp.valueOf("2023-7-18 15:00:00");
     Timestamp schedule2 = Timestamp.valueOf("2023-7-20 12:00:00");
@@ -76,6 +84,6 @@ import java.sql.Timestamp;
     
     //check if the data changed
     System.out.println("\nUpdated Schedule\n");
-    b.schedules.forEach(Schedule::printSchedule);
+    b.schedules.forEach(Schedule::printSchedule);*/
 }
 }
