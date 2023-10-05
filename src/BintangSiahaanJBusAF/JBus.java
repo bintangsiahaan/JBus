@@ -15,7 +15,7 @@ import java.sql.Timestamp;
         return bus;
     }
     public static void main(String[] args) {
-    
+    System.out.println("Hello from Intellij!");
     /*Price[] unfilteredArray = new Price[5];
     for(int i = 0; i < unfilteredArray.length; i++){
     
