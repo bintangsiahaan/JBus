@@ -2,6 +2,7 @@ package bintangSiahaanJBusAF;
 //import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.List;
 import java.text.SimpleDateFormat;
 import java.sql.Timestamp;
 /**
@@ -62,7 +63,20 @@ public class Schedule
             return false;
         }
     }
-    
+
+    public boolean isSeatAvailable(List<String> seats) {
+        boolean allAvailable = true;
+        for (String seat : seats) {
+            Boolean availability = seatAvailability.get(seat);
+            if (availability == null || !availability) {
+                allAvailable = false;
+                break;
+            }
+        }
+        return allAvailable;
+    }
+
+
     public void bookSeat(String seat){
         if (isSeatAvailable(seat)) {
             seatAvailability.put(seat, false);
@@ -71,4 +85,24 @@ public class Schedule
             System.out.println("Kursi " + seat + " tidak tersedia untuk dipesan.");
         }
     }
+
+    public void bookSeat(List<String> seats) {
+        for (String seat : seats) {
+            bookSeat(seat);
+        }
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat sdFormat = new SimpleDateFormat("MMMM d, yyyy HH:mm:ss");
+        String formattedDepartureSchedule = sdFormat.format(this.departureSchedule.getTime());
+
+        int totalSeats = seatAvailability.size();
+        int occupiedSeats = (int) seatAvailability.values().stream().filter(avail -> !avail).count();
+
+        return "Departure Schedule: " + formattedDepartureSchedule +
+                "\nOccupied Seats: " + occupiedSeats + "/" + totalSeats;
+    }
+
+
 }
