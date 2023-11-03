@@ -7,7 +7,7 @@ package bintangSiahaanJBusAF;
  * @author Bintang Siahaan
  * @version (a version number or a date)
  */
-public class Voucher extends Serializable implements FileParser
+public class Voucher extends Serializable
 {
     public String name;
     private boolean used;

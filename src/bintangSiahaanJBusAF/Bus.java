@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * @author Bintang Siahaan
  * @version (a version number or a date)
  */
-public class Bus extends Serializable implements FileParser
+public class Bus extends Serializable
 {
     public int capacity;
     public Facility facility;
@@ -49,8 +49,28 @@ public class Bus extends Serializable implements FileParser
     }
     
     public void addSchedule(Timestamp calendar){
+        try {
+            boolean isDuplicate = false;
+            for (Schedule existingSchedule : schedules) {
+                if (existingSchedule.departureSchedule.equals(calendar)) {
+                    isDuplicate = true;
+                    break;
+                }
+            }
+
+            if (isDuplicate) {
+                System.out.println("Jadwal dengan waktu yang sama sudah ada.");
+            } else {
+                Schedule newSchedule = new Schedule(calendar, capacity);
+                schedules.add(newSchedule);
+            }
+        } catch (Exception e) {
+            System.out.println("Terjadi kesalahan saat menambahkan jadwal: " + e.getMessage());
+        }
+
         Schedule newSchedule = new Schedule(calendar, capacity);
         schedules.add(newSchedule);
+
     }
     
 }
