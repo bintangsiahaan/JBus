@@ -11,29 +11,21 @@ public class Renter extends Serializable
 {
     public String companyName = "";
     public String address = "";
-    public int phoneNumber = 0;
+    //public int phoneNumber = 0;
+    public String phoneNumber = "";
 
     public static final String REGEX_NAME = "^[A-Z][a-zA-Z0-9_]{4,20}$";
     public static final String REGEX_PHONE = "^[0-9]{9,12}$";
-    public Renter(int id, String companyName){
-        super(id);
+    public Renter(String companyName){
         this.companyName = companyName;
     }
     
-    public Renter(int id,String companyName, String address){
-        super(id);
-        this.companyName = companyName;
-        this.address = address;
-    }
-    
-    public Renter(int id, String companyName, int phoneNumber){
-        super(id);
+    public Renter(String companyName, String phoneNumber){
         this.companyName = companyName;
         this.phoneNumber = phoneNumber;
     }
     
-    public Renter(int id, String companyName, int phoneNumber, String address){
-        super(id);
+    public Renter(String companyName, String phoneNumber, String address){
         this.companyName = companyName;
         this.phoneNumber = phoneNumber;
         this.address = address;

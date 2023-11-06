@@ -12,9 +12,9 @@ public class Account extends Serializable
     public String email;
     public String name;
     public String password;
-    
-    public Account(int id, String name, String email, String password){
-        super(id);
+    public static final String REGEX_EMAIL = "^[a-zA-Z0-9][a-zA-Z0-9]+@[a-zA-Z.]+?\\.[a-zA-Z]+?$";
+    public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
+    public Account(String name, String email, String password){
         this.name = name;
         this.email = email;
         this.password = password;
@@ -30,6 +30,13 @@ public class Account extends Serializable
     }
 
     public boolean read(String string) {
+        return false;
+    }
+
+    public boolean validate(){
+        if (this.email.matches(REGEX_EMAIL) && this.password.matches(REGEX_PASSWORD)){
+            return true;
+        }
         return false;
     }
 }

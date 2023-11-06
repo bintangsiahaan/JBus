@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import java.sql.Timestamp;
 
 /**
  * Write a description of class JBus here.
@@ -14,8 +15,17 @@ import com.google.gson.reflect.TypeToken;
  * @version (a version number or a date)
  */
 public class JBus {
-    public static void main(String[] args) {
-        try {
+    public static Bus createBus() {
+        Price price = new Price(750000, 5);
+        Bus bus = new Bus("Netlab Bus", Facility.LUNCH, price, 25,
+                BusType.REGULER, City.BANDUNG, new Station("Depok Terminal", City.DEPOK,
+                "Jl. Margonda Raya"), new Station("Halte UI", City.JAKARTA, "Universitas Indonesia"));
+        Timestamp timestamp = Timestamp.valueOf("2023-07-27 19:00:00");
+        bus.addSchedule(timestamp);
+        return bus;
+    }
+    public static void main(String[] args) throws InterruptedException {
+        /*try {
             String filepath =
                     "D:\\KULIAH\\SEMESTER 3\\OOP\\praktikum\\data\\buses_CS.json";
             JsonTable<Bus> busList = new JsonTable<>(Bus.class,filepath);
@@ -24,17 +34,39 @@ public class JBus {
         }
         catch (Throwable t){
             t.printStackTrace();
+        }*/
+        try{
+            String filepath = "D:\\\\KULIAH\\\\SEMESTER 3\\\\OOP\\\\praktikum\\\\data\\\\accountDatabase.json";
+            JsonTable<Account> tableAccount = new JsonTable<>(Account.class, filepath);
+            tableAccount.add(new Account("Dio", "dio@gmail.com", "NgikNgok"));
+            tableAccount.writeJson();
+            System.out.println(tableAccount);
+            Bus bus = createBus();
+            bus.schedules.forEach(Schedule::printSchedule);
+            for(int i =0; i < 10; i++){
+                BookingThread thread = new BookingThread("Thread " + i,bus,
+                        Timestamp.valueOf("2023-07-27 19:00:00"));
+            }
+            Thread.sleep(1000);
+            bus.schedules.forEach(Schedule::printSchedule);
+        }catch(Throwable t){
+            t.printStackTrace();
         }
     }
 
     public static List<Bus> filterByDeparture(List<Bus> buses, City departure, int page, int pageSize) {
-        String departureString = departure.toString();
-
-        return Algorithm.<Bus>paginate(buses, page, pageSize, i -> i.departure.toString().equalsIgnoreCase(departureString));
+        Predicate<Bus> cityExist = (bus) -> bus.city.equals(departure);
+        return Algorithm.paginate(buses, page, pageSize, cityExist);
     }
 
     public static List<Bus> filterByPrice(List<Bus> buses, int min, int max){
-        return Algorithm.<Bus>collect(buses, i -> i.price.price >= min && i.price.price <= max);
+        List<Bus> filteredBuses = new ArrayList<>();
+        for (Bus bus : buses){
+            if (bus.price.price >= min && bus.price.price <= max){
+                filteredBuses.add(bus);
+            }
+        }
+        return filteredBuses;
     }
 
     public static Bus filterBusId(List<Bus> buses, int id) {
