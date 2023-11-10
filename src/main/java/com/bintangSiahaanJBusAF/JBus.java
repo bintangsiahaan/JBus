@@ -1,13 +1,10 @@
 package com.bintangSiahaanJBusAF;
+import com.bintangSiahaanJBusAF.dbjson.JsonDBEngine;
+import com.bintangSiahaanJBusAF.dbjson.JsonTable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
 import java.util.ArrayList;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import java.sql.Timestamp;
 
 /**
@@ -30,6 +27,8 @@ public class JBus {
     }
     public static void main(String[] args) throws InterruptedException {
         SpringApplication.run(JBus.class, args);
+        JsonDBEngine.Run(JBus.class);
+        Runtime.getRuntime().addShutdownHook(new Thread(()-> JsonDBEngine.join()));
         /*try {
             String filepath =
                     "D:\\KULIAH\\SEMESTER 3\\OOP\\praktikum\\data\\buses_CS.json";

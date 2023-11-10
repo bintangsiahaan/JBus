@@ -1,6 +1,8 @@
 package com.bintangSiahaanJBusAF;
 
 
+import com.bintangSiahaanJBusAF.dbjson.Serializable;
+
 /**
  * Write a description of class Renter here.
  *

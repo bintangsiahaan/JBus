@@ -1,4 +1,4 @@
-package com.bintangSiahaanJBusAF;
+package com.bintangSiahaanJBusAF.dbjson;
 import java.util.HashMap;
 
 public class Serializable {
