@@ -41,6 +41,13 @@ public class Account extends Serializable
         return false;
     }
 
+    public boolean topUp(double amount){
+        if(amount <= 0){
+            return false;
+        }
+        balance += balance + amount;
+        return  true;
+    }
     public boolean validate(){
         if (this.email.matches(REGEX_EMAIL) && this.password.matches(REGEX_PASSWORD)){
             return true;

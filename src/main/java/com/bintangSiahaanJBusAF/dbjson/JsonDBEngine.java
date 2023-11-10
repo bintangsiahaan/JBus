@@ -39,6 +39,7 @@ public class JsonDBEngine
 	{
 		if (autosaveThread != null)
 		{
+
 			System.err.println("JsonDBEngine already launched!");
 			return;
 		}
@@ -65,12 +66,19 @@ public class JsonDBEngine
 						loadedJsonTable.put(filepath, table);
 						// if type is Serializable, find maximum id in the list
 						// so the next instantiation can follow up the counter
-						if (!table.isEmpty() && Serializable.class.isAssignableFrom(value))
-						{
-							Serializable serial = Collections.max((JsonTable<? extends Serializable>) table);
-							if (serial != null)
-								Serializable.setLastAssignedId((Class<? extends Serializable>) value, serial.id);
+						if (!table.isEmpty() && Serializable.class.isAssignableFrom(value)) {
+							int maxId = 0;
+							for (Object item : table) {
+								if (item instanceof Serializable) {
+									Serializable serializableItem = (Serializable) item;
+									if (serializableItem.id > maxId) {
+										maxId = serializableItem.id;
+									}
+								}
+							}
+							Serializable.setLastAssignedId((Class<? extends Serializable>) value, maxId);
 						}
+
 					}
 					f.setAccessible(true);
 					f.set(null, table);
