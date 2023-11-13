@@ -1,5 +1,4 @@
 package com.bintangSiahaanJBusAF;
-import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.sql.Timestamp;
 import java.util.List;
@@ -16,9 +15,9 @@ public class Payment extends Invoice
     private int busId;
     //public Calendar departureDate;
     public Timestamp departureDate;
-    public String busSeat;
+    public List<String> busSeat;
 
-    public Payment(int buyerId, int renterId, int busId, String busSeat, Timestamp departureDate){
+    public Payment(int buyerId, int renterId, int busId, List<String> busSeat, Timestamp departureDate){
         super(buyerId, renterId);
         this.buyerId = buyerId;
         this.renterId = renterId;
@@ -27,7 +26,7 @@ public class Payment extends Invoice
         this.busSeat = busSeat;
     }
 
-    public Payment(Account buyer, Renter renter, int busId, String busSeat, Timestamp departureDate){
+    public Payment(Account buyer, Renter renter, int busId, List<String> busSeat, Timestamp departureDate){
         super(buyer.id, renter.id);
         this.buyerId = buyerId;
         this.renterId = renterId;
