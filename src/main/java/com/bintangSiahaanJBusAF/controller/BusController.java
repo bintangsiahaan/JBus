@@ -1,88 +1,68 @@
 package com.bintangSiahaanJBusAF.controller;
+
 import com.bintangSiahaanJBusAF.*;
+import com.bintangSiahaanJBusAF.dbjson.JsonAutowired;
 import com.bintangSiahaanJBusAF.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
-import com.bintangSiahaanJBusAF.dbjson.JsonAutowired;
-import java.util.List;
-import java.sql.Timestamp;
 
-public class BusController implements BasicGetController<Bus> {
+import java.sql.Timestamp;
+import java.util.List;
+
+
+@RestController
+@RequestMapping("/bus")
+public class BusController implements BasicGetController<Bus>{
     @JsonAutowired(value = Bus.class, filepath = "D:\\KULIAH\\SEMESTER 3\\OOP\\praktikum\\src\\main\\java\\com\\bintangSiahaanJBusAF\\json\\bus_db.json")
     public static JsonTable<Bus> busTable;
 
-    @Override
     public JsonTable<Bus> getJsonTable() {
         return busTable;
     }
-
     @PostMapping("/create")
-    public BaseResponse<Bus> create (
+    public BaseResponse<Bus> create(
             @RequestParam int accountId,
             @RequestParam String name,
-            @RequestParam int capacity, // Ubah tipe data menjadi int untuk kapasitas
+            @RequestParam int capacity,
             @RequestParam List<Facility> facilities,
             @RequestParam BusType busType,
-            @RequestParam double price,
+            @RequestParam int price,
             @RequestParam int stationDepartureId,
             @RequestParam int stationArrivalId
-    ) {
-        // Validate Account
-        Account account = Algorithm.<Account>find(AccountController.accountTable, pred -> pred.id == accountId);
-        if (account == null) {
-            return new BaseResponse<>(false, "Account not found or not a renter.", null);
+    )
+    {
+        try {
+            // Validate parameters
+            Account acc = Algorithm.<Account>find(new AccountController().getJsonTable(), t -> t.id == accountId);
+            if (acc == null || acc.company == null ||
+                    !Algorithm.<Station>exists(new StationController().getJsonTable(), t -> t.id == stationArrivalId) ||
+                    !Algorithm.<Station>exists(new StationController().getJsonTable(), t -> t.id == stationDepartureId)) {
+                return new BaseResponse<>(false, "Ada kesalahan dalam input parameter", null);
+            }
+            Bus bus = new Bus(name, facilities, new Price(price), capacity, busType,
+                    Algorithm.<Station>find(new StationController().getJsonTable(), t->t.id == stationDepartureId),
+                    Algorithm.<Station>find(new StationController().getJsonTable(), t->t.id == stationArrivalId));
+            busTable.add(bus);
+            return new BaseResponse<>(true, "Berhasil membuat bus!! keren.", bus);
+        }catch (Exception e) {
+            return new BaseResponse<>(false, "Ada kesalahan saat membuat bus baru!", null);
         }
-
-        // Validate StationDeparture and StationArrival
-        Station stationDeparture = Algorithm.<Station>find(StationController.stationTable, pred -> pred.id == stationDepartureId);
-        if (stationDeparture == null) {
-            return new BaseResponse<>(false, "StationDeparture not found.", null);
-        }
-
-        Station stationArrival = Algorithm.<Station>find(StationController.stationTable, pred -> pred.id == stationArrivalId);
-        if (stationArrival == null) {
-            return new BaseResponse<>(false, "StationArrival not found.", null);
-        }
-
-        // Objek stasiun telah ditemukan, sekarang buat objek Bus.
-        Bus bus = new Bus(accountId, name, capacity, facilities, busType, price, stationDeparture, stationArrival); // Perubahan parameter di sini
-        busTable.add(bus);
-        return new BaseResponse<>(true, "Bus created successfully.", bus);
     }
-
 
     @PostMapping("/addSchedule")
     public BaseResponse<Bus> addSchedule(
             @RequestParam int busId,
             @RequestParam String time
-    ){
+    )
+    {
         try {
-            Timestamp calendar = Timestamp.valueOf(time);
-
-            // Find the bus with the given ID.
-            Bus bus = busTable.get(busId);
-            if (bus == null) {
-                return new BaseResponse<>(false, "Bus not found.", null);
-            }
-
-            // Add the schedule to the bus.
-            bus.addSchedule(calendar);
-
-            try {
-                JsonTable.writeJson(busTable, busTable.filepath);
-            } catch (Exception e) {
-                // Handle the exception - print a message or log it
-                return new BaseResponse<>(false, "Failed to update the database.", null);
-            }
-
-            // Return a successful response.
-            return new BaseResponse<>(true, "Schedule added successfully.", bus);
-        } catch (Exception e) {
-            // Handle the error and return an appropriate response.
-            if (e.getMessage().contains("Duplicate")) {
-                return new BaseResponse<>(false, "Schedule with the same time already exists.", null);
-            } else {
-                return new BaseResponse<>(false, "Failed to add schedule: " + e.getMessage(), null);
-            }
+            Bus bus = Algorithm.<Bus>find(busTable, t->t.id == busId);
+            bus.addSchedule(Timestamp.valueOf(time));
+            return new BaseResponse<>(true, "Berhasil buat schedule men!!", bus);
+        }catch (Exception e) {
+            return new BaseResponse<>(false, "Ada kesalahan saat menambah schedule!", null);
         }
     }
+
+
 }
+

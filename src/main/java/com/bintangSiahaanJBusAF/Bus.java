@@ -1,75 +1,62 @@
 package com.bintangSiahaanJBusAF;
-import com.bintangSiahaanJBusAF.dbjson.Serializable;
-import com.bintangSiahaanJBusAF.Price;
 
+import com.bintangSiahaanJBusAF.dbjson.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Timestamp;
 
-/**
- * Write a description of class Bus here.
- *
- * @author Bintang Siahaan
- * @version (a version number or a date)
- */
+
 public class Bus extends Serializable
 {
-    public int accountId;
-    public int capacity; // Mengubah tipe variabel capacity menjadi int
-    public List<Facility> facilities;
     public String name;
-    public double price;
-    public BusType busType;
     public Station departure;
     public Station arrival;
+    public Price price;
+    public List<Facility> facilities;
+    public int capacity;
+    public BusType busType;
     public List<Schedule> schedules;
+    public int accountId;
 
-    public Bus(int accountId, String name, int capacity, List<Facility> facilities, BusType busType, double price, Station departure, Station arrival) {
-        this.accountId = accountId;
+    public Bus(String name, List<Facility> facilities, Price price, int capacity,
+               BusType busType, Station departure, Station arrival){
         this.name = name;
-        this.capacity = capacity;
         this.facilities = facilities;
-        this.busType = busType;
         this.price = price;
+        this.capacity = capacity;
+        this.busType = busType;
         this.departure = departure;
         this.arrival = arrival;
         this.schedules = new ArrayList<>();
     }
-
     public String toString(){
-        return "\nId : " + super.id + "\nNama : " + name + "\nFasilitas : " + facilities + "" + price + "\nCapacity : " + capacity +
-                "\nBus Type : " + busType + "" + departure + "" + arrival;
+        return "ID: " + super.id + "; Name: " + name + "; Facility: " + facilities + "; " + price + "; Capacity: " + capacity + "; Bus Type: " + busType + "\n" + departure + "\n" + arrival;
     }
-
-    public Object write() {
-        return null;
-    }
-
-    public boolean read(String string) {
+    public boolean read(String file){
         return false;
     }
-
-    public void addSchedule(Timestamp calendar){
+    public Object write(){
+        return null;
+    }
+    public void addSchedule(Timestamp departureSchedule) {
         try {
             boolean isDuplicate = false;
-            for (Schedule existingSchedule : schedules) {
-                if (existingSchedule.departureSchedule.equals(calendar)) {
+            for (Schedule scheduleTest : schedules) {
+                if (scheduleTest.departureSchedule.equals(departureSchedule)) {
                     isDuplicate = true;
                     break;
                 }
             }
-
             if (isDuplicate) {
-                System.out.println("Jadwal dengan waktu yang sama sudah ada.");
-            } else {
-                Schedule newSchedule = new Schedule(calendar, this.capacity); // Menggunakan this.capacity karena variabel capacity telah diubah ke tipe int
+                System.out.println("Ditemukan jadwal duplikat");
+            }
+            else {
+                Schedule newSchedule = new Schedule(departureSchedule, capacity);
                 schedules.add(newSchedule);
             }
-        } catch (Exception e) {
-            System.out.println("Terjadi kesalahan saat menambahkan jadwal: " + e.getMessage());
         }
-
-        Schedule newSchedule = new Schedule(calendar, this.capacity); // Menggunakan this.capacity karena variabel capacity telah diubah ke tipe int
-        schedules.add(newSchedule);
+        catch (RuntimeException  e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
