@@ -18,7 +18,7 @@ import java.security.NoSuchAlgorithmException;
 public class AccountController implements BasicGetController<Account>
 {
 
-    @JsonAutowired(value = Account.class, filepath = "D:\\KULIAH\\SEMESTER 3\\OOP\\praktikum\\src\\main\\java\\com\\bintangSiahaanJBusAF\\json\\account.json")
+    @JsonAutowired(value = Account.class, filepath = "src\\main\\java\\com\\raihanMuhammadIhsanJBusAF\\json\\account.json")
     public static JsonTable<Account> accountTable;
 
     @GetMapping
@@ -119,4 +119,7 @@ public class AccountController implements BasicGetController<Account>
         return new BaseResponse<>(true, "Berhasil TopUp", amount);
     }
 
+
+    //@GetMapping("/{id}")
+    //String getById(@PathVariable int id) { return "account id " + id + " not found!"; }
 }

@@ -18,8 +18,8 @@ public class Bus extends Serializable
     public List<Schedule> schedules;
     public int accountId;
 
-    public Bus(String name, List<Facility> facilities, Price price, int capacity,
-               BusType busType, Station departure, Station arrival){
+    public Bus(String name, List<Facility> facilities, Price price, int capacity,  BusType busType,
+                Station departure, Station arrival){
         this.name = name;
         this.facilities = facilities;
         this.price = price;
