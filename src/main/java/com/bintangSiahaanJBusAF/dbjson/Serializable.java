@@ -1,7 +1,14 @@
 package com.bintangSiahaanJBusAF.dbjson;
+
 import java.util.HashMap;
 
-public class Serializable {
+/**
+ * The {@code Serializable} class represents a base class for objects that can be serialized.
+ * It includes functionality for generating unique identifiers for each object instance.
+ *
+ * @param <T> the type of the class that extends {@code Serializable}
+ */
+public class Serializable implements Comparable<Serializable> {
     public final int id;
     private static HashMap<Class<?>, Integer> mapCounter = new HashMap<Class <?>, Integer>();
     protected Serializable(){

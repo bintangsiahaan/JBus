@@ -1,11 +1,10 @@
 package com.bintangSiahaanJBusAF;
 
-
 /**
- * Enumeration class BusType - write a description of the enum class here
+ * The {@code BusType} enumeration represents different types of buses.
+ * Each type corresponds to a specific category of buses.
  *
  * @author BintangSiahaan
- * @version (version number or date here)
  */
 public enum BusType
 {

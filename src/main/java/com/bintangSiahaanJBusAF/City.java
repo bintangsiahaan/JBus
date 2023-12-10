@@ -2,10 +2,10 @@ package com.bintangSiahaanJBusAF;
 
 
 /**
- * Enumeration class City - write a description of the enum class here
+ * The {@code City} enumeration represents different cities.
+ * Each city corresponds to a specific location or region.
  *
  * @author Bintang Siahaan
- * @version (version number or date here)
  */
 public enum City
 {

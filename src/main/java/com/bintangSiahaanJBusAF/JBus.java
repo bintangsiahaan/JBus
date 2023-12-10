@@ -1,36 +1,28 @@
 package com.bintangSiahaanJBusAF;
+
 import com.bintangSiahaanJBusAF.dbjson.JsonDBEngine;
-import com.bintangSiahaanJBusAF.dbjson.JsonTable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import java.util.List;
-import java.util.ArrayList;
-import java.sql.Timestamp;
-import java.lang.reflect.*;
-
+import java.io.IOException;
 /**
- * Write a description of class JBus here.
- *
+ * The main class for the JBus application.
+ * This class serves as the entry point for running the JBus application using Spring Boot.
+ * It initializes the JsonDBEngine, starts the Spring application, and adds a shutdown hook for joining the JsonDBEngine.
  * @author Bintang Siahaan
- * @version (a version number or a date)
  */
-
 @SpringBootApplication
 public class JBus {
-    /*public static Bus createBus() {
-        Price price = new Price(750000, 5);
-        Bus bus = new Bus("Netlab Bus", Facility.LUNCH, price, 25,
-                BusType.REGULER, City.BANDUNG, new Station("Depok Terminal", City.DEPOK,
-                "Jl. Margonda Raya"), new Station("Halte UI", City.JAKARTA, "Universitas Indonesia"));
-        Timestamp timestamp = Timestamp.valueOf("2023-07-27 19:00:00");
-        bus.addSchedule(timestamp);
-        return bus;
-    }*/
-    public static void main(String[] args) throws InterruptedException {
-        SpringApplication.run(JBus.class, args);
+    /**
+     * The main method that is called when the JBus application is executed.
+     *
+     * @param args The command line arguments passed to the application.
+     * @throws IOException If an I/O error occurs.
+     * @throws InterruptedException If the application is interrupted while waiting for the JsonDBEngine to finish.
+     */
+    public static void main(String[] args) throws IOException, InterruptedException {
         JsonDBEngine.Run(JBus.class);
+        SpringApplication.run(JBus.class, args);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> JsonDBEngine.join()));
 
     }
 }
-

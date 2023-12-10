@@ -1,23 +1,43 @@
 package com.bintangSiahaanJBusAF.controller;
 
-import com.bintangSiahaanJBusAF.Bus;
-import com.bintangSiahaanJBusAF.City;
-import com.bintangSiahaanJBusAF.Station;
+import com.bintangSiahaanJBusAF.*;
 import com.bintangSiahaanJBusAF.dbjson.JsonAutowired;
 import com.bintangSiahaanJBusAF.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * The {@code StationController} class handles HTTP requests related to stations, providing functionality for station creation.
+ *
+ * @see BasicGetController
+ * @see Station
+ * @see JsonAutowired
+ * @see JsonTable
+ */
 @RestController
 @RequestMapping("/station")
 public class StationController implements BasicGetController<Station> {
-    @JsonAutowired(value = Station.class, filepath = "src\\main\\java\\com\\raihanMuhammadIhsanJBusAF\\json\\station.json")
+    /**
+     * The JSON table storing station data.
+     */
+    @JsonAutowired(value = Station.class, filepath = "D:\\KULIAH\\SEMESTER 3\\OOP\\praktikum\\src\\main\\java\\com\\bintangSiahaanJBusAF\\json\\station.json")
     public static JsonTable<Station> stationTable;
+    /**
+     * Retrieves the JSON table for stations.
+     *
+     * @return the JSON table for stations
+     */
     @Override
     public JsonTable<Station> getJsonTable() {
         return stationTable;
     }
-
-    //Add new Station
+    /**
+     * Creates a new station with the provided parameters.
+     *
+     * @param stationName the name of the station
+     * @param city        the city where the station is located
+     * @param address     the address of the station
+     * @return a {@code BaseResponse} containing information about the operation's success and the created station
+     */
     @PostMapping("/create")
     public BaseResponse<Station> createStation(
             @RequestParam String stationName,
@@ -25,29 +45,21 @@ public class StationController implements BasicGetController<Station> {
             @RequestParam String address
     ) {
         try {
-            // Validate parameters
+
             if (stationName.isBlank() || city.isBlank() || address.isBlank()) {
-                return new BaseResponse<>(false, "Parameter values cannot be blank or null", null);
+                return new BaseResponse<>(false, "Failed To Create Station! There's Empty Parameter", null);
             }
-
-            // Validate city as a valid enum value
-            City cityEnum = City.valueOf(city.toUpperCase());
-
-            // Create a new station using the provided details
-            Station newStation = new Station(stationName, cityEnum, address);
-
-            // Add the new station to the stationTable
+            City newCity = City.valueOf(city.toUpperCase());
+            Station newStation = new Station(stationName, newCity, address);
+            if (Algorithm.<Station>exists(getJsonTable(), s -> s.stationName.equals(stationName) && s.city.equals(newCity) & s.address.equals(address))){
+                return new BaseResponse<>(false, "Failed To Create Station! This Station Already Exists", null);
+            }
             stationTable.add(newStation);
-
-            //Success response message
-            return new BaseResponse<>(true, "Station added successfully", newStation);
+            return new BaseResponse<>(true, "Successfully Created Station", newStation);
         } catch (IllegalArgumentException e) {
-            // Handle invalid enum value
-            return new BaseResponse<>(false, "Invalid city value", null);
+            return new BaseResponse<>(false, "Failed To Create Station! City Is Not Available", null);
         } catch (Exception e) {
-            // Handle other unexpected errors
-            return new BaseResponse<>(false, "An error occurred while adding the station", null);
+            return new BaseResponse<>(false, "Error!", null);
         }
     }
-
 }

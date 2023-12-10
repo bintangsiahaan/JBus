@@ -1,10 +1,10 @@
 package com.bintangSiahaanJBusAF;
 
 /**
- * Enumeration class Facility - write a description of the enum class here
+ * The {@code Facility} enumeration represents different facilities available on a bus.
+ * Each facility corresponds toa a specific amenity or feature.
  *
  * @author Bintang Siahaan
- * @version (version number or date here)
  */
 public enum Facility
 {

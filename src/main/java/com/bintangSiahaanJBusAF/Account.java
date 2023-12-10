@@ -1,55 +1,72 @@
 package com.bintangSiahaanJBusAF;
 
-
 import com.bintangSiahaanJBusAF.dbjson.Serializable;
 
 /**
- * Write a description of class Account here.
- *
+ * The Account class represents user accounts with basic information and functionalities.
+ * Extends Serializable to support JSON serialization.
  * @author Bintang Siahaan
- * @version (a version number or a date)
  */
-public class Account extends Serializable
-{
-    public Renter company;
-    public double balance;
+public class Account extends Serializable {
     public String email;
     public String name;
     public String password;
-    public static final String REGEX_EMAIL =
-            "^[a-zA-Z0-9]+@[a-zA-Z_]+?\\.[a-zA-Z.]+[a-zA-Z]+$";
-    public static final String REGEX_PASSWORD =
-            "^( =.*[a-z])( =.*[A-Z])( =.*\\d)[a-zA-Z\\d]{8,}$";
-    public Account(String name, String email, String password){
+    public String passwordNotEncrypted;
+    public Renter company;
+    public double balance;
+    public static final String REGEX_EMAIL = "^[A-Z0-9a-z]+@[A-Za-z]+\\.[A-Za-z]+[A-Za-z]+$";
+    public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
+
+    /**
+     * Constructs an Account object with the specified name, email, and password.
+     * @param name The name associated with the account.
+     * @param email The email address associated with the account.
+     * @param password The encrypted password associated with the account.
+     */
+    public Account(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.balance = 0;
-        this.company = null;
-    }
-    
-    public String toString(){
-        return "\nId : " + super.id + "\nName : " + name + "\nEmail : " + email +
-               "\nPassword : " + password;
-    }
-    
-    public Object write() {
-        return null;
     }
 
-    public boolean read(String string) {
-        return false;
+    /**
+     * Constructs an Account object with the specified name, email, password, and non-encrypted password.
+     * @param name The name associated with the account.
+     * @param email The email address associated with the account.
+     * @param password The encrypted password associated with the account.
+     * @param passwordNotEncrypted The non-encrypted password associated with the account.
+     */
+    public Account(String name, String email, String password, String passwordNotEncrypted) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.passwordNotEncrypted = passwordNotEncrypted;
     }
 
-    public boolean topUp(double amount){
-        if(amount <= 0){
-            return false;
-        }
-        balance += balance + amount;
-        return  true;
+    /**
+     * Returns a string representation of the Account object.
+     * @return A string representation of the Account object.
+     */
+    public String toString() {
+        return "\n====Account Class====\nName = " + this.name + "\nEmail = " + this.email + "\nPassword = " + this.password;
     }
-    public boolean validate(){
-        if (this.email.matches(REGEX_EMAIL) && this.password.matches(REGEX_PASSWORD)){
+
+    /**
+     * Validates the email and non-encrypted password using regular expressions.
+     * @return True if the email and password meet the validation criteria, false otherwise.
+     */
+    public boolean validate() {
+        return this.email.matches(REGEX_EMAIL) && this.passwordNotEncrypted.matches(REGEX_PASSWORD);
+    }
+
+    /**
+     * Increases the account balance by the specified amount.
+     * @param amount The amount to be added to the account balance.
+     * @return True if the amount is positive, false otherwise.
+     */
+    public boolean countTopUp(double amount) {
+        if (amount > 0.0) {
+            this.balance = this.balance + amount;
             return true;
         }
         return false;

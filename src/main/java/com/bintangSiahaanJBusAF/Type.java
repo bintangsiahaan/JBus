@@ -2,7 +2,8 @@ package com.bintangSiahaanJBusAF;
 
 
 /**
- * Enumeration class Type - write a description of the enum class here
+ * The Type enumeration represents the different types used in the system, such as REBATE and DISCOUNT.
+ * It provides a way to categorize and differentiate between different types of entities or actions.
  *
  * @author Bintang Siahaan
  * @version (version number or date here)
